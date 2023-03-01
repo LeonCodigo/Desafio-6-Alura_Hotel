@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.management.RuntimeErrorException;
+import javax.swing.JOptionPane;
 
 import modelo.Reserva;
 
 public class ReservaDAO 
 {
    private Connection coneccion; 
+   private String ultimoQueryBusqueda ="SELECT * FROM reservas;";
 	
 	public ReservaDAO(Connection coneccion)
 	{
@@ -51,16 +53,94 @@ public class ReservaDAO
 		
 	}
 	
-	public List<Reserva> cargar()
+	public List<Reserva> leer(String pBuscado)
 	{
 		List<Reserva> reservasCargadas = new ArrayList<>();
 		
-		String queryString = "SELECT * FROM reservas";
+		String queryString = "SELECT * FROM reservas;";
+		
+		if(!pBuscado.equals(""))
+		{
+			queryString = "SELECT * FROM reservas WHERE id= '"+ pBuscado.toString()  +"' OR forma_pago = '"+ pBuscado.toString() + "' OR valor = '"+ pBuscado.toString() +"'";
+		    //+" OR fecha_entrada="+ pBuscado + " or fecha_salida="+ pBuscado +" or valor="+ pBuscado
+		
+		}
+		
+		ultimoQueryBusqueda = queryString;
+		
+		System.out.println("ReservaDAO query ejecutado: " + queryString);
+		
+		
+		try
+		{
+			Statement statement = coneccion.createStatement();
+			boolean resultadoQuery = statement.execute(queryString);
+			
+			if(resultadoQuery)
+			{
+			   ResultSet resultSet = statement.getResultSet();	
+			   
+			   while(resultSet.next())
+				{
+				   reservasCargadas.add(  new Reserva( resultSet.getInt("id"), resultSet.getDate("fecha_entrada"), resultSet.getDate("fecha_salida"), resultSet.getString("valor"), resultSet.getString("forma_pago") ) );
+				}			
+			}		
+			
+			
+		} 
+		catch (SQLException e) 
+		{
+			throw new RuntimeException(e);
+		}
+		
 		
 		return reservasCargadas;
 	}
+
+	public int eliminar(String id)
+	{
+		int res = 0;
+		try 
+		{
+			Statement statement = coneccion.createStatement();
+			statement.execute("DELETE FROM reservas WHERE id = " + id);
+			res = statement.getUpdateCount();									/*6*/
+			System.out.println("ReservaDAO query ejecutado: " +"DELETE FROM reservas WHERE id = " + id);
+		} 
+		catch (Exception e) 
+		{
+			JOptionPane.showMessageDialog(null, e);
+			throw new RuntimeException(e);
+		}
+		
+		return res;
+	}
+
+	public int modificar(String id, String col, String valor)
+	{
+		String query = "UPDATE reservas SET " + col +" = "+ valor +" WHERE id =" + id;
+		int res=0;
+		try
+		{
+			JOptionPane.showMessageDialog(null, query);
+			Statement statement = coneccion.createStatement();
+			statement.execute(query);
+			res = statement.getUpdateCount();
+			
+		} catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e);
+			throw new RuntimeException();			
+		}
+		
+		
+		return res;
+	}
 	
-	
+	public String get_ultimoQueryBusqueda()
+	{
+		return this.ultimoQueryBusqueda;
+	}
 	
 }
 
@@ -88,5 +168,10 @@ public class ReservaDAO
  *         ResultSet recibe la clave auto generada por la base de datos a travez del metodo ->  getGeneratedKeys() 
  *         del prepared statemen, una vez obtenidas las claves auto generadas. Hacemos el proceso inverso, le pasamos a la 
  *         reserva, el id que obtubimos en el resultset
+ * 
+ *  6 -->> devuelve cuantas filas fueron modificadas. 
+ * 
+ * 
+ * 
  * 
  */

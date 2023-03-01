@@ -67,7 +67,9 @@ public class ReservaDAO
 		}
 		
 		ultimoQueryBusqueda = queryString;
-		JOptionPane.showMessageDialog(null, queryString);
+		
+		System.out.println("ReservaDAO query ejecutado: " + queryString);
+		
 		
 		try
 		{
@@ -103,7 +105,7 @@ public class ReservaDAO
 			Statement statement = coneccion.createStatement();
 			statement.execute("DELETE FROM reservas WHERE id = " + id);
 			res = statement.getUpdateCount();									/*6*/
-			JOptionPane.showMessageDialog(null, "DELETE FROM reservas WHERE id = " + id);
+			System.out.println("ReservaDAO query ejecutado: " +"DELETE FROM reservas WHERE id = " + id);
 		} 
 		catch (Exception e) 
 		{
@@ -120,7 +122,7 @@ public class ReservaDAO
 		int res=0;
 		try
 		{
-			JOptionPane.showMessageDialog(null, query);
+			System.out.println("ReservaDAO query ejecutado: " +query);
 			Statement statement = coneccion.createStatement();
 			statement.execute(query);
 			res = statement.getUpdateCount();

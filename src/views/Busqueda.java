@@ -285,8 +285,9 @@ public class Busqueda extends JFrame {
 				Object objeto_DatoDeFila =modelo.getValueAt( tbReservas.getSelectedRow(), 0 );			    
 				if(0==JOptionPane.showConfirmDialog(tbReservas, " ¿Desea modificar el registro con N° de reserva: " + objeto_DatoDeFila +" ?"))
 				{
-				  cartel("Se selecciono la columna: "+ modelo.getColumnName(tbReservas.getSelectedColumn()));
-				String col = modelo.getColumnName(tbReservas.getSelectedColumn());
+				  System.out.println("Se selecciono la columna: "+ modelo.getColumnName(tbReservas.getSelectedColumn()));
+				
+				  String col = modelo.getColumnName(tbReservas.getSelectedColumn());
 				String valor = modificar_nuevoValor(tbReservas.getSelectedColumn());
 				 modificar(objeto_DatoDeFila.toString(),col,valor);
 				}
