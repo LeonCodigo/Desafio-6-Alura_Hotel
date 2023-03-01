@@ -1,0 +1,35 @@
+package factory;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class TestConexion
+{
+	
+    ConnectionFactory connectionFactory = new ConnectionFactory();       /*1*/
+    
+    Connection conexion = connectionFactory.recuperarConexion();         /*2*/
+    
+    
+    System.out.println("CONECTADO");
+    
+    conexion.close();
+    
+    System.out.println("DESCONECTADO");
+    
+    
+}
+
+
+
+/* 1 --> instanciamos objeto de la clase ConnectionFactory que crea y devuelve una conneccion con el metodo recuperarConexion()        
+ * 
+ * 2 -> Recuperamos la conexion para poder usarla en ensta clase y la guardamos en un objeto de tipo Connection.
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * *
+ */

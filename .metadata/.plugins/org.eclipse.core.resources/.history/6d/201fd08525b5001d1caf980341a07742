@@ -1,0 +1,39 @@
+package controller;
+
+import java.sql.Connection;
+
+import DAO.ReservaDAO;
+import factory.ConnectionFactory;
+import modelo.Reserva;
+
+public class ReservasController
+{
+     private ReservaDAO reservaDAO;                                                   /*1*/
+     
+     public ReservasController()
+     {
+    	 Connection coneccion = new ConnectionFactory().recuperarConexion();
+    	 this.reservaDAO = new ReservaDAO(coneccion);    	 
+     }
+     
+     public void guardar (Reserva reserva)
+     {
+    	 this.reservaDAO.guardar(reserva);
+     }
+     
+     
+     
+     
+}
+
+
+/* -- Esta clase ReservasController --> como lo indica controla las resersevas, manipula los datos utilizando objetos 
+ * de la clase Reserva y guarda sus datos en la base de datos con un objeto de la clase reservaDAO, que recibe en su
+ * constructor un coneccion y tiene un metodo que recibe una reserva y guarda sus datos en la DB. 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

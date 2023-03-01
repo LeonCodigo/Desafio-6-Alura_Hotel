@@ -1,0 +1,23 @@
+package factory;
+
+public class TestConexion
+{
+    ConnectionFactory connectionFactory = new ConnectionFactory();       /*1*/
+    
+    
+    
+}
+
+
+
+/* 1 --> instanciamos objeto de la clase ConnectionFactory que crea y devuelve una conneccion con el metodo recuperarConexion()        
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * *
+ */

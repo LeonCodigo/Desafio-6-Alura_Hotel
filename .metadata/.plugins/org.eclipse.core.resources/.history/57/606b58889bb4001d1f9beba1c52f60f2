@@ -1,0 +1,12 @@
+package modelo;
+
+public class Reserva 
+{
+   private  Integer id;
+   private  Date fechaEn;
+   private  Date fechaSal;
+   private  String valor;
+   private  String formaPago;
+	
+	
+}

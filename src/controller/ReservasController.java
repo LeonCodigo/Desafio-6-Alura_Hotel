@@ -1,0 +1,58 @@
+package controller;
+
+import java.sql.Connection;
+import java.util.List;
+
+import DAO.ReservaDAO;
+import factory.ConnectionFactory;
+import modelo.Reserva;
+
+public class ReservasController
+{
+     private ReservaDAO reservaDAO;                                                   /*1*/
+     
+     public ReservasController()
+     {
+    	 Connection coneccion = new ConnectionFactory().recuperarConexion();
+    	 this.reservaDAO = new ReservaDAO(coneccion);    	 
+     }
+     
+     public void guardar (Reserva reserva)
+     {
+    	 this.reservaDAO.guardar(reserva);
+     }
+     
+     public List<Reserva> leer(String pBuscado)
+     {
+    	return this.reservaDAO.leer(pBuscado);
+     }
+     
+     public int eliminar(String id)
+     {
+    	return this.reservaDAO.eliminar(id);
+     }
+
+	public int modificar(String id, String col, String valor) {  return this.reservaDAO.modificar(id,col,valor);  }
+     
+     
+     
+     
+}
+
+
+/* -- Esta clase ReservasController --> como lo indica controla las resersevas, Pero es solamente un intermediario entre la
+ * parte grafica y la clase reservaDAO que guarda sus datos en la base de datos, que recibe en su
+ * constructor un coneccion y tiene un metodo que recibe una reserva y guarda sus datos en la DB. no hace nada mas. 
+ * Esto es util para un mantenimiento del sistema mas sencillo, permite aislar en capas, por lo que en caso de cambios en 
+ * una clase solo se vea afectada la clase intermedia y no la clase final que hacer el petitorio. Por ejemplo si hacemos un 
+ * cambio de tipo de DB, tenemos que modificar ReservaDAO, pero la clase que controla la parte grafica sigue comunicandose a 
+ * travez de clases intermedias por lo que no va a necesitar ningun cambio. 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

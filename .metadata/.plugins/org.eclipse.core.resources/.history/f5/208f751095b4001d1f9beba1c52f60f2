@@ -1,0 +1,50 @@
+package factory;
+
+import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;                                                         /*0*/
+
+public class ConnectionFactory 
+{
+     public DataSource dataSource;                                                                        /*1*/
+     
+     public ConnectionFactory()
+     {
+    	 ComboPooledDataSource combopooled = new ComboPooledDataSource();                                 /*2*/
+    	 combopooled.setJdbcUrl("jdbc:mysql://localhost/hotelalura?useTimezone=true&serverTimezone=UTC"); /*3*/
+    	 combopooled.setUser("root");
+    	 combopooled.setPassword("pepe123mysql");
+    	 this.dataSource = combopooled;                                                                   /*4*/
+     }
+     
+     
+     
+     
+}
+
+
+
+
+
+
+
+
+
+
+
+/*0 -->> com.mchange.v2.c3p0 libreria para manejo de pool de conexiones 
+ * 
+ * 1 --> Almacena los datos de conneccion de la base de datos
+ *
+ * 2 -->> pool de conexion
+ * 
+ * 3 -->> url de la coneccion con el pedido de datos de zona horaria
+ * 
+ * 4 -->> dataSource guarda los datos durante la vida del objeto, combopooled se crea en cada instanciacion 
+ * de ConnectionFactory.
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

@@ -1,0 +1,8 @@
+package factory;
+
+import javax.sql.DataSource;
+
+public class ConnectionFactory 
+{
+     public DataSource dataSource;
+}
